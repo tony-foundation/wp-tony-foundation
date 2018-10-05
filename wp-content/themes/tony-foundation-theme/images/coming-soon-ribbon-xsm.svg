@@ -1,0 +1,10 @@
+<svg viewBox="0 0 150 100"
+    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect x="0" y="0" width="300" height="150" fill="#FEFEFE"/>
+  <g transform="scale(0.5) translate(0 0)">
+    <rect x="0" y="98" width="300" height="30" style="fill:#18706E;"/>
+    <g>
+      <text x="60" y="120px" style="font-family:'RobotoCondensed-Regular', 'Roboto Condensed';font-size:20px;fill:#fff;">Coming soon!</text>
+    </g>
+  </g>
+</svg>
