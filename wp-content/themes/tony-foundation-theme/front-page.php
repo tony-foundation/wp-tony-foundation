@@ -61,16 +61,12 @@ get_header(); ?>
 								<?php the_title( '<h2 class="sticky-title"></h2>' ); ?>
 							</div><!--sticky-title-wrapper-->
 							<div class="sticky-excerpt-wrapper"><!--wrapper helps override anchor styles-->
-								<?php the_excerpt();?><span class="sticky-continue-reading">...continue reading</span>
+									<?php the_excerpt(); ?><span class="sticky-continue-reading">...continue reading</span>
 							</div><!--sticky-excerpt-wrapper-->
 						</div><!--all-the-post-classes+sticky-thumbnail-wrapper-->
 					</a><!--sticky-thumbnail-link-->
-
-
-
-
-				<?php endwhile;?>
-
+					<?php wp_reset_postdata(); ?>
+				<?php } ?>
 
 			</section><!--sticky-posts-wrapper-->
 
