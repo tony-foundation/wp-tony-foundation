@@ -20,55 +20,118 @@ get_header(); ?>
 					<p class="mission-banner">The Tony Foundation meets immediate needs for families whose sole income earner is impacted by cancer.</p>
 			</div><!--hero-wrapper-->
 
-			<div class="site-features-wrapper">
-				<a class="site-feature-wrapper-with-link" href="<?php echo site_url(); ?>/about#tonys-story">
-					<div class="site-feature">
-						<img id="icon-family" class="site-feature-icon" src="<?php echo site_url(); ?>/wp-content/themes/tony-foundation-theme/images/icon-family.png"/>
-						<h2 class="site-feature-label">Tony's Story</h2>
-					</div><!--site-feature-->
-				</a>
-				<a class="site-feature-wrapper-with-link" href="<?php echo site_url(); ?>#">
-					<div class="site-feature coming-soon">
-						<img id="icon-apply" class="site-feature-icon" src="<?php echo site_url(); ?>/wp-content/themes/tony-foundation-theme/images/icon-apply.png"/>
-						<h2 class="site-feature-label">Apply for Assistance</h2>
-					</div><!--site-feature-->
-			</a><!--site-feature-wrapper-with-link-->
-			<a class="site-feature-wrapper-with-link" href="<?php echo site_url(); ?>/get-involved/">
-				<div class="site-feature">
-					<img id="icon-get-involved" class="site-feature-icon" src="<?php echo site_url(); ?>/wp-content/themes/tony-foundation-theme/images/icon-get-involved.png"/>
-					<h2 class="site-feature-label">Get Involved</h2>
-				</div><!--site-feature-->
-			</a><!--site-feature-wrapper-with-link-->
-			</div><!--site-features-wrapper-->
 
 			<section class="sticky-section-wrapper">
 
-				<?php $sticky_posts = get_option( 'sticky_posts' );
+				<?php
+					global $post;
 					$args = array(
-						'posts_per_page' => 4,
-						'post__in'  => $sticky_posts,
-						'ignore_sticky_posts' => 1
+						'posts_per_page' => 3,
 					);
-					$sticky_query = new WP_Query( $args );
+					$latests_posts = get_posts( $args );
 				?>
 
-				<?php while ( $sticky_query->have_posts() ) : $sticky_query->the_post(); ?>
-
-					<a href="<?php the_permalink($post->ID) ?>" class="sticky-thumbnail-link">
-						<div <?php post_class(array('sticky-thumbnail-wrapper')); ?> >
-							<?php the_post_thumbnail('tonyfoundation-sticky'); ?>
-							<div class="sticky-title-wrapper"><!--wrapper helps override anchor styles-->
-								<?php the_title( '<h2 class="sticky-title"></h2>' ); ?>
-							</div><!--sticky-title-wrapper-->
-							<div class="sticky-excerpt-wrapper"><!--wrapper helps override anchor styles-->
+				<?php
+					foreach ( $latests_posts as $post ) {
+						setup_postdata( $post );
+				?>
+						<a href="<?php the_permalink(); ?>" class="sticky-thumbnail-link">
+							<div <?php post_class( array( 'sticky-thumbnail-wrapper' ) ); ?> >
+								<?php the_post_thumbnail( 'tonyfoundation-sticky' ); ?>
+								<div class="sticky-title-wrapper"><!--wrapper helps override anchor styles-->
+									<?php the_title( '<h2 class="sticky-title"></h2>' ); ?>
+								</div><!--sticky-title-wrapper-->
+								<div class="sticky-excerpt-wrapper"><!--wrapper helps override anchor styles-->
 									<?php the_excerpt(); ?><span class="sticky-continue-reading">...continue reading</span>
-							</div><!--sticky-excerpt-wrapper-->
-						</div><!--all-the-post-classes+sticky-thumbnail-wrapper-->
-					</a><!--sticky-thumbnail-link-->
+								</div><!--sticky-excerpt-wrapper-->
+							</div><!--all-the-post-classes+sticky-thumbnail-wrapper-->
+						</a><!--sticky-thumbnail-link-->
 					<?php wp_reset_postdata(); ?>
 				<?php } ?>
 
 			</section><!--sticky-posts-wrapper-->
+
+
+			<section id="leadership" class="about-section">
+
+				<h2 class="leadership-section">Board of Directors</h2>
+
+				<div class="profile-list-wrapper">
+
+					<?php $board_query = new WP_Query( array(
+						'post_type' => 'tfpeople',
+						'posts_per_page' => -1,
+						'meta_query'     => array(
+							array(
+								'key'       => 'person-is-on-board-of-directors',
+								'value'     => '1',
+								'compare'   => '='
+							),
+						'orderby'  => 'meta_value',
+						'meta_key' => 'person-display-order',
+						'order'    => 'ASC')
+					)); ?>
+
+					<?php while ( $board_query->have_posts() ) : $board_query->the_post(); ?>
+
+					<a href="<?php the_permalink($post->ID) ?>" class="person-thumbnail-link">
+						<div class="profile-wrapper">
+							<?php the_post_thumbnail('tonyfoundation-person', array('class' => 'circle-image')); ?>
+							<?php
+								the_title( '<h2 class="person-name">', '</h2>');
+								echo '<h3 class="person-title">';
+								echo get_post_meta($post->ID, 'person-title', true);
+								echo '</h3>';
+							?>
+						</div><!--profile-wrapper-->
+					</a><!--person-thumbnail-link-->
+
+					<?php wp_reset_postdata(); ?>
+					<?php endwhile;?>
+					</div><!--profile-list-wrapper-->
+
+				</section><!--leadership-->
+
+
+				<section id="volunteers" class="about-section">
+
+					<h2 class="leadership-section">Volunteers</h2>
+
+					<div class="profile-list-wrapper">
+
+						<?php $volunteer_query = new WP_Query( array(
+							'post_type' => 'tfpeople',
+							'posts_per_page' => -1,
+							'meta_query'     => array(
+								array(
+									'key'       => 'person-is-volunteer',
+									'value'     => '1',
+									'compare'   => '='
+								),
+							'orderby'  => 'meta_value',
+							'meta_key' => 'person-display-order',
+							'order'    => 'ASC')
+						)); ?>
+
+						<?php while ( $volunteer_query->have_posts() ) : $volunteer_query->the_post(); ?>
+
+						<a href="<?php the_permalink($post->ID) ?>" class="person-thumbnail-link">
+							<div class="profile-wrapper">
+								<?php the_post_thumbnail('tonyfoundation-person', array('class' => 'circle-image')); ?>
+								<?php
+									the_title( '<h2 class="person-name">', '</h2>');
+								?>
+							</div><!--profile-wrapper-->
+						</a><!--person-thumbnail-link-->
+
+						<?php wp_reset_postdata(); ?>
+						<?php endwhile;?>
+						</div><!--profile-list-wrapper-->
+
+					</section><!--leadership-->
+
+
+
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
