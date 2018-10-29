@@ -17,8 +17,14 @@ get_header(); ?>
 	<div id="primary" class="content-area front-page">
 		<main id="main" class="front-page-main">
 			<div class="hero-wrapper">
-					<p class="mission-banner">The Tony Foundation meets immediate needs for families whose sole income earner is impacted by cancer.</p>
+					<p class="mission-banner">The Tony Foundation meets immediate needs for families affected by cancer.</p>
 			</div><!--hero-wrapper-->
+
+			<section id="about" class="about-text">
+				<p>We are a non-profit corporation based in Austin, Texas. Our goal is to focus on the immediate, existing needs families face when a parent has with cancer and becomes unable to continue employment.</p>
+
+				<p>To learn more about our strategy for supporting local families affected by cancer, read <a href="#">Our Journey Begins</a>.</p>
+			</section><!--about-->
 
 
 			<section class="sticky-section-wrapper">
@@ -95,7 +101,7 @@ get_header(); ?>
 
 				<section id="volunteers" class="about-section">
 
-					<h2 class="leadership-section">Volunteers</h2>
+					<!-- <h2 class="leadership-section">Volunteers</h2> -->
 
 					<div class="profile-list-wrapper">
 
@@ -128,7 +134,7 @@ get_header(); ?>
 						<?php endwhile;?>
 						</div><!--profile-list-wrapper-->
 
-					</section><!--leadership-->
+					</section><!--volunteers-->
 
 
 
