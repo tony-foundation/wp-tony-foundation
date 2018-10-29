@@ -43,31 +43,34 @@ get_header(); ?>
 
 			<section class="sticky-section-wrapper">
 
-				<?php
-					global $post;
+				<?php $sticky_posts = get_option( 'sticky_posts' );
 					$args = array(
-						'posts_per_page' => 3,
+						'posts_per_page' => 4,
+						'post__in'  => $sticky_posts,
+						'ignore_sticky_posts' => 1
 					);
-					$latests_posts = get_posts( $args );
+					$sticky_query = new WP_Query( $args );
 				?>
 
-				<?php
-					foreach ( $latests_posts as $post ) {
-						setup_postdata( $post );
-				?>
-						<a href="<?php the_permalink(); ?>" class="sticky-thumbnail-link">
-							<div <?php post_class( array( 'sticky-thumbnail-wrapper' ) ); ?> >
-								<?php the_post_thumbnail( 'tonyfoundation-sticky' ); ?>
-								<div class="sticky-title-wrapper"><!--wrapper helps override anchor styles-->
-									<?php the_title( '<h2 class="sticky-title"></h2>' ); ?>
-								</div><!--sticky-title-wrapper-->
-								<div class="sticky-excerpt-wrapper"><!--wrapper helps override anchor styles-->
-									<?php the_excerpt(); ?><span class="sticky-continue-reading">...continue reading</span>
-								</div><!--sticky-excerpt-wrapper-->
-							</div><!--all-the-post-classes+sticky-thumbnail-wrapper-->
-						</a><!--sticky-thumbnail-link-->
-					<?php wp_reset_postdata(); ?>
-				<?php } ?>
+				<?php while ( $sticky_query->have_posts() ) : $sticky_query->the_post(); ?>
+
+					<a href="<?php the_permalink($post->ID) ?>" class="sticky-thumbnail-link">
+						<div <?php post_class(array('sticky-thumbnail-wrapper')); ?> >
+							<?php the_post_thumbnail('tonyfoundation-sticky'); ?>
+							<div class="sticky-title-wrapper"><!--wrapper helps override anchor styles-->
+								<?php the_title( '<h2 class="sticky-title"></h2>' ); ?>
+							</div><!--sticky-title-wrapper-->
+							<div class="sticky-excerpt-wrapper"><!--wrapper helps override anchor styles-->
+								<?php the_excerpt();?><span class="sticky-continue-reading">...continue reading</span>
+							</div><!--sticky-excerpt-wrapper-->
+						</div><!--all-the-post-classes+sticky-thumbnail-wrapper-->
+					</a><!--sticky-thumbnail-link-->
+
+
+
+
+				<?php endwhile;?>
+
 
 			</section><!--sticky-posts-wrapper-->
 
